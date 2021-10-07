@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="../css/cabecera.css">
-    <title><?php $titulo?></title>
+    <title><?php echo $titulo?></title>
 </head>
 <body>
       <nav class="navbar navbar-dark flex-md-nowrap">
