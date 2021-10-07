@@ -1,4 +1,4 @@
-# Programación Web Dinamica 2021
+# Programación Web Dinámica 2021
 
 ### Repositorio para proyectos de PWD
 
