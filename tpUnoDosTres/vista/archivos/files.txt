@@ -1,0 +1,1 @@
+.txt para la creación de directorio "archivos" en git
