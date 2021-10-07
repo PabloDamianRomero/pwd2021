@@ -9,6 +9,7 @@
         <h2>DEPARTAMENTO DE PROGRAMACION</h2>
         <h3>CÁTEDRA PROGRAMACIÓN WEB DINÁMICA</h3>
         <h3 class="m-5">PHP / MySql / PDO</h3>
+        <p>Nota: Nombre de la bd es 'infoautos'.</p>
     </div>
 
 </div>
