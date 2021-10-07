@@ -1,12 +1,19 @@
 <?php
 class Session
 {
+    private $mensaje;
+
     /**
      * Constructor que inicia la sesión.
      */
     public function __construct()
     {
-        session_start();
+        $resp = true;
+        if (!session_start()) {
+            $this->$mensaje = "No se puede iniciar la sesión";
+            $resp = false;
+        }
+        return $resp;
     }
 
     /**
@@ -15,7 +22,7 @@ class Session
     public function iniciar($nombreUsuario, $psw)
     {
         $_SESSION['usnombre'] = $nombreUsuario;
-        $_SESSION['uspass'] = $psw;
+        $_SESSION['uspass'] = md5($psw);
     }
 
     /**
