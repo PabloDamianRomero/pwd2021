@@ -14,7 +14,7 @@ body{
 }
 
 .bienvenida{
-    margin-top: 100px;
+    /* margin-top: 30px; */
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -38,6 +38,13 @@ main.container {
     font-style: italic;
     color: #fbf399;
 }
+
+/* .cuadro-usuario {
+    background-color: #212529;
+    display: inline-block;
+    margin-right: 20px;
+    padding: 2px 20px;
+} */
 
 
 

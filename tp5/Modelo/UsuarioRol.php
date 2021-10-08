@@ -5,13 +5,13 @@ class UsuarioRol
 
     private $objUsuario;
     private $objRol;
-    private $mensajeoperacion;
+    private $mensajeOperacion;
 
     public function __construct()
     {
         $this->objUsuario = null;
         $this->objRol = null;
-        $this->mensajeoperacion = "";
+        $this->mensajeOperacion = "";
     }
 
     public function setear($objUsuario, $objRol)
@@ -31,9 +31,9 @@ class UsuarioRol
         return $this->objRol;
     }
 
-    public function getmensajeoperacion()
+    public function getMensajeOperacion()
     {
-        return $this->mensajeoperacion;
+        return $this->mensajeOperacion;
     }
 
 
@@ -47,9 +47,9 @@ class UsuarioRol
         $this->objRol = $valor;
     }
 
-    public function setmensajeoperacion($valor)
+    public function setMensajeOperacion($valor)
     {
-        $this->mensajeoperacion = $valor;
+        $this->mensajeOperacion = $valor;
     }
 
     public function cargar()
@@ -83,7 +83,7 @@ class UsuarioRol
                 }
             }
         } else {
-            $this->setmensajeoperacion("UsuarioRol->cargar: " . $base->getError());
+            $this->setMensajeOperacion("UsuarioRol->cargar: " . $base->getError());
         }
         return $resp;
     }
@@ -99,10 +99,10 @@ class UsuarioRol
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("UsuarioRol->insertar: " . $base->getError());
+                $this->setMensajeOperacion("UsuarioRol->insertar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("UsuarioRol->insertar: " . $base->getError());
+            $this->setMensajeOperacion("UsuarioRol->insertar: " . $base->getError());
         }
         return $resp;
     }
@@ -121,10 +121,10 @@ class UsuarioRol
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("UsuarioRol->modificar 1: " . $base->getError());
+                $this->setMensajeOperacion("UsuarioRol->modificar 1: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("UsuarioRol->modificar 2: " . $base->getError());
+            $this->setMensajeOperacion("UsuarioRol->modificar 2: " . $base->getError());
         }
         return $resp;
     }
@@ -140,10 +140,10 @@ class UsuarioRol
             if ($base->Ejecutar($sql)) {
                 return true;
             } else {
-                $this->setmensajeoperacion("UsuarioRol->eliminar: " . $base->getError());
+                $this->setMensajeOperacion("UsuarioRol->eliminar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("UsuarioRol->eliminar: " . $base->getError());
+            $this->setMensajeOperacion("UsuarioRol->eliminar: " . $base->getError());
         }
         return $resp;
     }
@@ -183,7 +183,7 @@ class UsuarioRol
                 }
             }
         } else {
-            $this->setmensajeoperacion("UsuarioRol->listar: ".$base->getError());
+            $this->setMensajeOperacion("UsuarioRol->listar: ".$base->getError());
         }
         return $arreglo;
     }

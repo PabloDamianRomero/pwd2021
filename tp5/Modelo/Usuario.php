@@ -8,7 +8,7 @@ class Usuario
     private $uspass;
     private $usmail;
     private $usdeshabilitado;
-    private $mensajeoperacion;
+    private $mensajeOperacion;
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Usuario
         $this->uspass = "";
         $this->usmail = "";
         $this->usdeshabilitado = null;
-        $this->mensajeoperacion = "";
+        $this->mensajeOperacion = "";
 
     }
 
@@ -59,9 +59,9 @@ class Usuario
         return $this->usdeshabilitado;
     }
 
-    public function getmensajeoperacion()
+    public function getMensajeOperacion()
     {
-        return $this->mensajeoperacion;
+        return $this->mensajeOperacion;
     }
 
 
@@ -90,9 +90,9 @@ class Usuario
         $this->usdeshabilitado = $valor;
     }
 
-    public function setmensajeoperacion($valor)
+    public function setMensajeOperacion($valor)
     {
-        $this->mensajeoperacion = $valor;
+        $this->mensajeOperacion = $valor;
     }
 
     public function cargar()
@@ -109,7 +109,7 @@ class Usuario
                 }
             }
         } else {
-            $this->setmensajeoperacion("Usuario->listar: " . $base->getError());
+            $this->setMensajeOperacion("Usuario->listar: " . $base->getError());
         }
         return $resp;
     }
@@ -124,10 +124,10 @@ class Usuario
                 $this->setIdUsuario($elid);
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("Usuario->insertar: " . $base->getError());
+                $this->setMensajeOperacion("Usuario->insertar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("Usuario->insertar: " . $base->getError());
+            $this->setMensajeOperacion("Usuario->insertar: " . $base->getError());
         }
         return $resp;
     }
@@ -142,10 +142,10 @@ class Usuario
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("Usuario->modificar: " . $base->getError());
+                $this->setMensajeOperacion("Usuario->modificar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("Usuario->modificar: " . $base->getError());
+            $this->setMensajeOperacion("Usuario->modificar: " . $base->getError());
         }
         return $resp;
     }
@@ -159,10 +159,10 @@ class Usuario
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("Usuario->eliminar: " . $base->getError());
+                $this->setMensajeOperacion("Usuario->eliminar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("Usuario->eliminar: " . $base->getError());
+            $this->setMensajeOperacion("Usuario->eliminar: " . $base->getError());
         }
         return $resp;
     }
@@ -185,7 +185,7 @@ class Usuario
                 }
             }
         } else {
-            $this->setmensajeoperacion("Usuario->listar: ".$base->getError());
+            $this->setMensajeOperacion("Usuario->listar: ".$base->getError());
         }
         return $arreglo;
     }
