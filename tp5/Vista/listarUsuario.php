@@ -1,6 +1,6 @@
 <?php
 $titulo="Listado de usuarios";
-$estructuraAMostrar = "desdeVista";
+$estructuraAMostrar = "vistaSegura";
 include_once "../configuracion.php";
 include_once ("estructura/cabecera.php");
 $objAbmUsuario = new AbmUsuario();

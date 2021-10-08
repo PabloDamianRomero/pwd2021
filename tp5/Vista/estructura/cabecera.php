@@ -27,7 +27,7 @@ if ($estructuraAMostrar == "desdeAccion") {
 <?php
 
 if ($estructuraAMostrar == "vistaSegura") {
-        $objLogin = new Session();
+    $objLogin = new Session();
     if (!$objLogin->activa()) {
         echo $objLogin->getError();
         exit("<a href='login.php'>Login</a>");
@@ -43,7 +43,7 @@ if ($estructuraAMostrar == "vistaSegura") {
     <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-        <a class="nav-link" href="#">Enlace_01</a>
+        <a class="nav-link" href="listarUsuario.php">Usuarios</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" href="#">Enlace_02</a>
