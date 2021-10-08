@@ -3,56 +3,56 @@ class Rol
 {
     private $idrol;
     private $rodescripcion;
-    private $mensajeoperacion;
+    private $mensajeOperacion;
 
     public function __construct()
     {
         $this->idrol = "";
         $this->rodescripcion = "";
-        $this->mensajeoperacion = "";
+        $this->mensajeOperacion = "";
     }
 
-    public function getIdrol()
+    public function getIdRol()
     {
         return $this->idrol;
     }
 
-    public function setIdrol($idrol)
+    public function setIdRol($idrol)
     {
         $this->idrol = $idrol;
     }
 
-    public function getRodescripcion()
+    public function getRoDescripcion()
     {
         return $this->rodescripcion;
     }
 
-    public function setRodescripcion($rodescripcion)
+    public function setRoDescripcion($rodescripcion)
     {
         $this->rodescripcion = $rodescripcion;
     }
 
-    public function getMensajeoperacion()
+    public function getMensajeOperacion()
     {
-        return $this->mensajeoperacion;
+        return $this->mensajeOperacion;
     }
 
-    public function setMensajeoperacion($mensajeoperacion)
+    public function setMensajeOperacion($mensajeOperacion)
     {
-        $this->mensajeoperacion = $mensajeoperacion;
+        $this->mensajeOperacion = $mensajeOperacion;
     }
 
     public function setear($idrol, $rodescripcion)
     {
-        $this->setIdrol($idrol);
-        $this->setRodescripcion($rodescripcion);
+        $this->setIdRol($idrol);
+        $this->setRoDescripcion($rodescripcion);
     }
 
     public function cargar()
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "SELECT * FROM rol WHERE idrol = " . $this->getIdrol();
+        $sql = "SELECT * FROM rol WHERE idrol = " . $this->getIdRol();
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
             if ($res > -1) {
@@ -63,7 +63,7 @@ class Rol
                 }
             }
         } else {
-            $this->setmensajeoperacion("Rol->cargar: " . $base->getError());
+            $this->setMensajeOperacion("Rol->cargar: " . $base->getError());
         }
         return $resp;
 
@@ -73,17 +73,17 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO rol(rodescripcion)  VALUES('" . $this->getRodescripcion() . "');";
+        $sql = "INSERT INTO rol(rodescripcion)  VALUES('" . $this->getRoDescripcion() . "');";
         echo $sql;
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
-                $this->setIdrol($elid);
+                $this->setIdRol($elid);
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("Rol->insertar: " . $base->getError());
+                $this->setMensajeOperacion("Rol->insertar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("Rol->insertar: " . $base->getError());
+            $this->setMensajeOperacion("Rol->insertar: " . $base->getError());
         }
         return $resp;
     }
@@ -92,16 +92,16 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE rol SET rodescripcion='" . $this->getRodescripcion() . "' WHERE idrol=" . $this->getIdrol();
+        $sql = "UPDATE rol SET rodescripcion='" . $this->getRoDescripcion() . "' WHERE idrol=" . $this->getIdRol();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
 
             } else {
-                $this->setmensajeoperacion("Rol->modificar 1: " . $base->getError());
+                $this->setMensajeOperacion("Rol->modificar 1: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("Rol->modificar 2: " . $base->getError());
+            $this->setMensajeOperacion("Rol->modificar 2: " . $base->getError());
         }
         return $resp;
     }
@@ -110,20 +110,20 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM rol WHERE idrol =" . $this->getIdrol();
+        $sql = "DELETE FROM rol WHERE idrol =" . $this->getIdRol();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setmensajeoperacion("Rol->eliminar: " . $base->getError());
+                $this->setMensajeOperacion("Rol->eliminar: " . $base->getError());
             }
         } else {
-            $this->setmensajeoperacion("Rol->eliminar: " . $base->getError());
+            $this->setMensajeOperacion("Rol->eliminar: " . $base->getError());
         }
         return $resp;
     }
 
-    public function listar($parametro = "")
+    public static function listar($parametro = "")
     {
         $arreglo = array();
         $base = new BaseDatos();
@@ -143,7 +143,7 @@ class Rol
             }
 
         } else {
-            $this->setmensajeoperacion("Rol->listar: ".$base->getError());
+            $this->setMensajeOperacion("Rol->listar: ".$base->getError());
         }
 
         return $arreglo;

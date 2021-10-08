@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 28, 2018 at 12:17 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 08-10-2021 a las 09:16:28
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bdautenticacion`
+-- Base de datos: `bdautenticacion`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rol`
+-- Estructura de tabla para la tabla `rol`
 --
 
 CREATE TABLE `rol` (
@@ -33,24 +32,38 @@ CREATE TABLE `rol` (
   `rodescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
+(2, 'administrador');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
   `idusuario` bigint(20) NOT NULL,
   `usnombre` varchar(50) NOT NULL,
-  `uspass` int(11) NOT NULL,
+  `uspass` varchar(50) NOT NULL,
   `usmail` varchar(50) NOT NULL,
   `usdeshabilitado` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
+(2, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'pablo@gmail.com', NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuariorol`
+-- Estructura de tabla para la tabla `usuariorol`
 --
 
 CREATE TABLE `usuariorol` (
@@ -59,25 +72,32 @@ CREATE TABLE `usuariorol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- Volcado de datos para la tabla `usuariorol`
+--
+
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(2, 2);
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `rol`
+-- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
   ADD PRIMARY KEY (`idrol`),
   ADD UNIQUE KEY `idrol` (`idrol`);
 
 --
--- Indexes for table `usuario`
+-- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idusuario`),
   ADD UNIQUE KEY `idusuario` (`idusuario`);
 
 --
--- Indexes for table `usuariorol`
+-- Indices de la tabla `usuariorol`
 --
 ALTER TABLE `usuariorol`
   ADD PRIMARY KEY (`idusuario`,`idrol`),
@@ -85,27 +105,27 @@ ALTER TABLE `usuariorol`
   ADD KEY `idrol` (`idrol`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `rol`
+-- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `usuario`
+-- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `usuariorol`
+-- Filtros para la tabla `usuariorol`
 --
 ALTER TABLE `usuariorol`
   ADD CONSTRAINT `fkmovimiento_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON UPDATE CASCADE,

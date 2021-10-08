@@ -1,12 +1,19 @@
 <?php
 class Session
 {
+    private $mensaje;
+
     /**
      * Constructor que inicia la sesión.
      */
     public function __construct()
     {
-        session_start();
+        $resp = true;
+        if (!session_start()) {
+            $this->mensaje = "No se puede iniciar la sesión";
+            $resp = false;
+        }
+        return $resp;
     }
 
     /**
@@ -15,7 +22,8 @@ class Session
     public function iniciar($nombreUsuario, $psw)
     {
         $_SESSION['usnombre'] = $nombreUsuario;
-        $_SESSION['uspass'] = $psw;
+        $_SESSION['uspass'] = md5($psw);
+        $_SESSION['activa'] = false;
     }
 
     /**
@@ -24,11 +32,23 @@ class Session
     public function validar()
     {
         $resp = false;
-        $usuario = new AbmUsuario();
-
-        $lista = $usuario->buscar($_SESSION);
-        if ($lista != null) {
-            $resp = true;
+        if (isset($_SESSION['usnombre'])) {
+            $nombreUsuario = $_SESSION['usnombre'];
+            if (isset($_SESSION['uspass'])) {
+                $psw = $_SESSION['uspass'];
+                $usuario = new AbmUsuario();
+                $lista = $usuario->buscar($_SESSION);
+                if ($lista != null) {
+                    $_SESSION['activa'] = true;
+                    $resp = true;
+                }else{
+                    $this->mensaje = 'No se encontro user en bd';
+                }
+            } else {
+                $this->mensaje = 'No esta seteada la clave';
+            }
+        } else {
+            $this->mensaje = 'No esta seteado el nombre de usuario';
         }
         return $resp;
     }
@@ -39,8 +59,10 @@ class Session
     public function activa()
     {
         $resp = false;
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            $resp = true;
+        if (isset($_SESSION['activa'])) {
+            $resp = $_SESSION['activa'];
+        } else {
+            $this->mensaje = 'No tiene sesión activa';
         }
         return $resp;
     }
@@ -50,10 +72,10 @@ class Session
      */
     public function getUsuario()
     {
+        $usuarioLog = null;
         if ($this->validar() && $this->activa()) {
             $usuario = new AbmUsuario();
             $lista = $usuario->buscar($_SESSION);
-
             $usuarioLog = $lista[0];
         }
         return $usuarioLog;
@@ -64,33 +86,61 @@ class Session
      */
     public function getRol()
     {
+        $objRol = null;
         if ($this->getUsuario() !== null) {
             $usuarioLog = $this->getUsuario();
             $param = array();
             $param['idusuario'] = $usuarioLog->getIdUsuario();
-            $objTransUsRol = new AbmUsuarioRol();
-            $lista = $objTransUsRol->buscar($param);
-            $objRol = $lista[0];
+            // echo "ID-USER: ".$param['idusuario'];
+            $objUsuarioRol = new AbmUsuarioRol();
+            $lista = $objUsuarioRol->buscar($param);
+            $objUsuarioRol = $lista[0];
+
+            // echo "<p>///////////////////</p>";
+            // print_r($objUsuarioRol);
+            // echo "<p>///////////////////</p>";
+
+            $objRol = $objUsuarioRol->getObjRol();
+            // echo "<p>-------------------</p>";
+            // print_r($objRol);
+            // echo "<p>-------------------</p>";
             $param1 = array();
             $param1['idrol'] = $objRol->getIdRol();
+            // print_r($param1);
             $objTransRol = new AbmRol();
             $lista = $objTransRol->buscar($param1);
+
             $objRol = $lista[0];
+            // print_r($objRol);
 
         }
         return $objRol;
     }
 
     /**
-     * Cierra la sesión actual.
+     * Cierra la session actual
+     *
+     * @return boolean
      */
     public function cerrar()
     {
-        if ($this->activa()) {
-            unset($_SESSION['usnombre']);
-            unset($_SESSION['uspass']);
-            session_destroy();
+        $resp = false;
+        if (!session_destroy()) {
+            $this->mensaje = 'No se puede cerrar la sesion';
+        }else{
+            $resp = true;
         }
+        return $resp;
+    }
+
+    /**
+     * Devuelve el mensaje de error
+     *
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->mensaje;
     }
 
 }
