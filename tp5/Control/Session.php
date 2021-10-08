@@ -86,35 +86,20 @@ class Session
      */
     public function getRol()
     {
-        $objRol = null;
+        $arrRoles = [];
         if ($this->getUsuario() !== null) {
             $usuarioLog = $this->getUsuario();
-            $param = array();
-            $param['idusuario'] = $usuarioLog->getIdUsuario();
-            // echo "ID-USER: ".$param['idusuario'];
-            $objUsuarioRol = new AbmUsuarioRol();
-            $lista = $objUsuarioRol->buscar($param);
-            $objUsuarioRol = $lista[0];
+            $idUsuario = ['idusuario'=>$usuarioLog->getIdUsuario()];
 
-            // echo "<p>///////////////////</p>";
-            // print_r($objUsuarioRol);
-            // echo "<p>///////////////////</p>";
-
-            $objRol = $objUsuarioRol->getObjRol();
-            // echo "<p>-------------------</p>";
-            // print_r($objRol);
-            // echo "<p>-------------------</p>";
-            $param1 = array();
-            $param1['idrol'] = $objRol->getIdRol();
-            // print_r($param1);
-            $objTransRol = new AbmRol();
-            $lista = $objTransRol->buscar($param1);
-
-            $objRol = $lista[0];
-            // print_r($objRol);
-
+            $abmUser = new AbmUsuario();
+            $arrUsuario = $abmUser->buscar($idUsuario);
+            
+            if(count($arrUsuario) > 0){
+                $abmUserRol = new AbmUsuarioRol();
+                $arrRoles = $abmUserRol->buscar($idUsuario);
+            }
         }
-        return $objRol;
+        return $arrRoles;
     }
 
     /**

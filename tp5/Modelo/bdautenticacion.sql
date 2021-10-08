@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2021 a las 09:16:28
+-- Tiempo de generación: 08-10-2021 a las 23:22:51
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -37,7 +37,9 @@ CREATE TABLE `rol` (
 --
 
 INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
-(2, 'administrador');
+(2, 'Administrador'),
+(3, 'Supervisor '),
+(4, 'Encargado');
 
 -- --------------------------------------------------------
 
@@ -58,7 +60,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
-(2, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'pablo@gmail.com', NULL);
+(2, 'José R', '0192023a7bbd73250516f069df18b500', 'admin@gmail.com', NULL),
+(3, 'Luciana B', 'f35364bc808b079853de5a1e343e7159', 'supervisor@gmail.com', NULL),
+(4, 'Nicolás S', '5cc3ef5de386a269c9631c317581ea51', 'encargado@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -76,7 +80,11 @@ CREATE TABLE `usuariorol` (
 --
 
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
-(2, 2);
+(2, 2),
+(2, 3),
+(2, 4),
+(3, 3),
+(4, 4);
 
 --
 -- Índices para tablas volcadas
@@ -112,13 +120,13 @@ ALTER TABLE `usuariorol`
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

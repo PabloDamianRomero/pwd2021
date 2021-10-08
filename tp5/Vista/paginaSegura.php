@@ -6,7 +6,7 @@ include_once "estructura/cabecera.php";
 ?>
 
 <div style="margin-bottom: 20%" class="container-fluid text-center">
-    <h1>PÁGINA SEGURA</h1>
+    <h1>Bienvenid@ <?php echo $objUsuario->getUsNombre(); ?></h1>
 </div>
 
 <?php
