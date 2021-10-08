@@ -33,10 +33,13 @@ if ($estructuraAMostrar == "vistaSegura") {
         exit("<a href='login.php'>Login</a>");
     }
     $objUsuario = $objLogin->getUsuario();
-    $objRol = $objLogin->getRol();
+    $arrObjRol = $objLogin->getRol();
+
+    $rolDesc = "";
+    $rolDesc = $arrObjRol[0]->getObjRol()->getRoDescripcion();
 
     echo '<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-    <a class="navbar-brand" href="#">Inicio</a>
+    <a class="navbar-brand" href="paginaSegura.php">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -64,19 +67,21 @@ if ($estructuraAMostrar == "vistaSegura") {
         <a class="nav-link" href="#">Enlace_07</a>
         </li>
     </ul>
-    </div>
-    <div class="collapse navbar-collapse" id="user-navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-        Usuario: ' . $objUsuario->getUsNombre() . ' | Rol: ' . $objRol->getRoDescripcion().'
-    </li>
-    <li class="nav-item" style="margin-left:12px;">
-        <a href="accion/cerrarLogin.php" style="color:#ff9090;">Cerrar Sesión</a>
-        </li>
-    </ul>
-    </div>
-    </nav>
     </div>';
+    if ($objUsuario != null) {
+        echo '<div class="collapse navbar-collapse" id="user-navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            Usuario: <span style="color:#f9e871;">' . $objUsuario->getUsNombre() . '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rol: <span style="color:#f9a371;">'.$rolDesc.'</span>
+        </li>
+        <li class="nav-item" style="margin-left:12px;">
+            <a href="accion/cerrarLogin.php" style="color:#ff9090;">Cerrar Sesión</a>
+            </li>
+        </ul>
+        </div>';
+    }
+    echo '</nav></div>';
+
 }
 ?>
 <main class="container mh-100" style="min-height: 100vh;">
