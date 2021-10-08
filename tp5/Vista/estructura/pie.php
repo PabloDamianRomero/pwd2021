@@ -21,10 +21,12 @@
     if ($estructuraAMostrar == "desdeVista" || $estructuraAMostrar == "vistaSegura") {
         echo '<script src="js/bootstrap/bootstrap.bundle.min.js"></script>';
         echo '<script src="js/validacion.js"></script>';
+        echo '<script src="js/userAndPass.js"></script>';
     }
     if ($estructuraAMostrar == "desdeAccion") {
         echo '<script src="../js/bootstrap/bootstrap.bundle.min.js"></script>';
         echo '<script src="../js/validacion.js"></script>';
+        echo '<script src="../js/userAndPass.js"></script>';
     }
     ?>
 </body>
