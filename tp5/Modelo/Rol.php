@@ -1,51 +1,46 @@
 <?php
 class Rol
 {
-    private $idrol;
-    private $rodescripcion;
+    private $idRol;
+    private $rolDescripcion;
     private $mensajeOperacion;
 
     public function __construct()
     {
-        $this->idrol = "";
-        $this->rodescripcion = "";
+        $this->idRol = "";
+        $this->rolDescripcion = "";
         $this->mensajeOperacion = "";
+    }
+
+    public function setear($id, $desc)
+    {
+        $this->setIdRol($id);
+        $this->setRolDescripcion($desc);
     }
 
     public function getIdRol()
     {
-        return $this->idrol;
+        return $this->idRol;
     }
-
-    public function setIdRol($idrol)
+    public function setIdRol($idRol)
     {
-        $this->idrol = $idrol;
+        $this->idRol = $idRol;
     }
-
-    public function getRoDescripcion()
+    public function getRolDescripcion()
     {
-        return $this->rodescripcion;
+        return $this->rolDescripcion;
     }
-
-    public function setRoDescripcion($rodescripcion)
+    public function setRolDescripcion($rolDescripcion)
     {
-        $this->rodescripcion = $rodescripcion;
+        $this->rolDescripcion = $rolDescripcion;
     }
-
     public function getMensajeOperacion()
     {
         return $this->mensajeOperacion;
     }
-
     public function setMensajeOperacion($mensajeOperacion)
     {
         $this->mensajeOperacion = $mensajeOperacion;
-    }
-
-    public function setear($idrol, $rodescripcion)
-    {
-        $this->setIdRol($idrol);
-        $this->setRoDescripcion($rodescripcion);
     }
 
     public function cargar()
@@ -58,7 +53,7 @@ class Rol
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    $this->setear($row['idrol'], $row['rodescripcion']);
+                    $this->setear($row['idrol'], $row['roldescripcion']);
 
                 }
             }
@@ -66,14 +61,13 @@ class Rol
             $this->setMensajeOperacion("Rol->cargar: " . $base->getError());
         }
         return $resp;
-
     }
 
     public function insertar()
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO rol(rodescripcion)  VALUES('" . $this->getRoDescripcion() . "');";
+        $sql = "INSERT INTO rol(roldescripcion)  VALUES('" . $this->getRolDescripcion() . "');";
         echo $sql;
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
@@ -92,7 +86,7 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE rol SET rodescripcion='" . $this->getRoDescripcion() . "' WHERE idrol=" . $this->getIdRol();
+        $sql = "UPDATE rol SET roldescripcion='" . $this->getRolDescripcion() . "' WHERE idrol=" . $this->getIdRol();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -123,30 +117,27 @@ class Rol
         return $resp;
     }
 
-    public static function listar($parametro = "")
+    public static function seleccionar($condicion = "")
     {
-        $arreglo = array();
+        $obj = null;
         $base = new BaseDatos();
         $sql = "SELECT * FROM rol ";
-        if ($parametro != "") {
-            $sql .= 'WHERE ' . $parametro;
+        if ($condicion != "") {
+            $sql .= 'WHERE ' . $condicion;
         }
         $res = $base->Ejecutar($sql);
         if ($res > -1) {
             if ($res > 0) {
-                while ($row = $base->Registro()) {
-                    $obj = new Rol();
-                    $obj->setear($row['idrol'], $row['rodescripcion']);
-                    array_push($arreglo, $obj);
-                }
-
+                $row = $base->Registro();
+                $obj = new Rol();
+                $obj->setear($row['idrol'], $row['roldescripcion']);
             }
 
         } else {
-            $this->setMensajeOperacion("Rol->listar: ".$base->getError());
+            $this->setMensajeOperacion("Rol->seleccionar: " . $base->getError());
         }
 
-        return $arreglo;
+        return $obj;
     }
 
 }

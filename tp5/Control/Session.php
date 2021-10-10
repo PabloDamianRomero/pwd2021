@@ -1,131 +1,96 @@
 <?php
-class Session
-{
-    private $mensaje;
-
-    /**
-     * Constructor que inicia la sesión.
-     */
+class Session{
+    private $usuarioActual;
+    private $pass;
+    //Constructor que inicia la sesion
     public function __construct()
     {
-        $resp = true;
-        if (!session_start()) {
-            $this->mensaje = "No se puede iniciar la sesión";
-            $resp = false;
-        }
-        return $resp;
+        session_start();
+        //$this->usuarioActual=$_SESSION['usuario'];
+        //$this->pass=$_SESSION['pass'];
     }
 
-    /**
-     * Actualiza las variables de sesión con los valores ingresados.
-     */
-    public function iniciar($nombreUsuario, $psw)
+    public function getUsuarioActual()
     {
-        $_SESSION['usnombre'] = $nombreUsuario;
-        $_SESSION['uspass'] = md5($psw);
-        $_SESSION['activa'] = false;
+        return $_SESSION['usuario'];
+    }
+    public function setUsuarioActual($usuario)
+    {
+        $_SESSION['usuario']=$usuario;
+    }
+    public function getPass()
+    {
+        return $_SESSION['pass'];
+    }
+    public function setPass($pass)
+    {
+        $_SESSION['pass']=$pass;
     }
 
-    /**
-     * Valida si la sesión actual tiene usuario y psw válidos. Devuelve true o false.
-     */
-    public function validar()
-    {
-        $resp = false;
-        if (isset($_SESSION['usnombre'])) {
-            $nombreUsuario = $_SESSION['usnombre'];
-            if (isset($_SESSION['uspass'])) {
-                $psw = $_SESSION['uspass'];
-                $usuario = new AbmUsuario();
-                $lista = $usuario->buscar($_SESSION);
-                if ($lista != null) {
-                    $_SESSION['activa'] = true;
-                    $resp = true;
-                }else{
-                    $this->mensaje = 'No se encontro user en bd';
-                }
-            } else {
-                $this->mensaje = 'No esta seteada la clave';
+    // Actualiza las variables de sesion con los valores ingresados
+    public function iniciar($nombreUsuario,$psw){
+        $this->setUsuarioActual($nombreUsuario);
+        $this->setPass($psw);
+    }
+    // Valida si la sesion actual tiene usuario y psw validos. Devuelve TRUE or FALSE
+    public function validar(){
+        $valido=false;
+        $nombre=$this->getUsuarioActual();
+        $pass=$this->getPass();
+        $objAbm=new abmUsuario();
+        $arreglo=$objAbm->buscar(['usnombre'=>$nombre,'uspass'=>$pass]);
+        if (count($arreglo)==1){
+            //Chequeo que no haya sido borrado
+            if ($arreglo[0]->getUsdeshabilitado()=="0000-00-00 00:00:00"){
+                $valido=true;
             }
-        } else {
-            $this->mensaje = 'No esta seteado el nombre de usuario';
-        }
-        return $resp;
-    }
-
-    /**
-     * Devuelve true o false si la sesión está activa o no.
-     */
-    public function activa()
-    {
-        $resp = false;
-        if (isset($_SESSION['activa'])) {
-            $resp = $_SESSION['activa'];
-        } else {
-            $this->mensaje = 'No tiene sesión activa';
-        }
-        return $resp;
-    }
-
-    /**
-     * Devuelve el usuario logeado.
-     */
-    public function getUsuario()
-    {
-        $usuarioLog = null;
-        if ($this->validar() && $this->activa()) {
-            $usuario = new AbmUsuario();
-            $lista = $usuario->buscar($_SESSION);
-            $usuarioLog = $lista[0];
-        }
-        return $usuarioLog;
-    }
-
-    /**
-     * Devuelve el rol del usuario logeado.
-     */
-    public function getRol()
-    {
-        $arrRoles = [];
-        if ($this->getUsuario() !== null) {
-            $usuarioLog = $this->getUsuario();
-            $idUsuario = ['idusuario'=>$usuarioLog->getIdUsuario()];
-
-            $abmUser = new AbmUsuario();
-            $arrUsuario = $abmUser->buscar($idUsuario);
-            
-            if(count($arrUsuario) > 0){
-                $abmUserRol = new AbmUsuarioRol();
-                $arrRoles = $abmUserRol->buscar($idUsuario);
+            //Chequeo que tenga un rol asignado
+            $abmRel=new AbmRelacion();
+            $arrayRel=$abmRel->buscar(['idusuario'=>$arreglo[0]->getIdusuario()]);
+            if (count($arrayRel)<1){
+                $valido=false;
             }
         }
-        return $arrRoles;
+        return $valido;
     }
-
-    /**
-     * Cierra la session actual
-     *
-     * @return boolean
-     */
-    public function cerrar()
-    {
-        $resp = false;
-        if (!session_destroy()) {
-            $this->mensaje = 'No se puede cerrar la sesion';
-        }else{
-            $resp = true;
+    // Devuelve TRUE o FALSE si la sesion esta activa o no
+    public function activa(){
+        $activa=false;
+        if (isset($_SESSION['usuario'])){
+            $activa=true;
         }
-        return $resp;
+        return $activa;
+    }
+    // Devuelve el usuario logeado
+    public function getUsuario(){
+        $objUs=null;
+        $abmUs=new abmUsuario();
+        $arrayUs=$abmUs->buscar(['usnombre'=>$this->getUsuarioActual(),'uspass'=>$this->getPass()]);
+        if (count($arrayUs)==1){
+            $objUs=$arrayUs[0];
+        }
+        return $objUs;
+    }
+    // Devuelve array de roles del usuario logeado
+    public function getRol(){
+        $roles=[];
+        $nombre=['usnombre'=>$this->getUsuarioActual()];
+        $abmUs= new abmUsuario();
+        $arreglo=$abmUs->buscar($nombre);
+        if (count($arreglo)==1){
+            $id=$arreglo[0]->getIdusuario();
+            $abmRelacion=new AbmRelacion();
+            $roles=$abmRelacion->buscar(['idusuario'=>$id]);
+        }
+        return $roles;
+    }
+    // Cierra la sesion actual
+    public function cerrar(){
+        session_unset();
+        session_destroy();
     }
 
-    /**
-     * Devuelve el mensaje de error
-     *
-     * @return string
-     */
-    public function getError()
-    {
-        return $this->mensaje;
-    }
 
+    
 }
+?>

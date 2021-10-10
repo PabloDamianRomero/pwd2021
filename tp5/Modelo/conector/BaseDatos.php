@@ -42,20 +42,9 @@ class BaseDatos extends PDO {
         return $this->getConec();
         
     }
-    
-  
-    
-    
-    
-    
-    
     public function getConec(){
         return $this->conec;
     }
-    
-    
-    
-    
     public function setDebug($debug){
         $this->debug = $debug;
     }
