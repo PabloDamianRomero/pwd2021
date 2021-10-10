@@ -1,119 +1,16 @@
 <?php
-
-class AbmUsuario
-{
-    //Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
-
-    /**
-     * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
-     * @param array $param
-     * @return object
-     */
-
-    public function cargarObjeto($param)
-    {
-        $obj = null;
-        if (array_key_exists('usnombre', $param) && array_key_exists('uspass', $param) && array_key_exists('usmail', $param)) {
-            $obj = new Usuario();
-            $obj->setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], null);
-        }
-        return $obj;
-    }
-
-    /**
-     * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
-     * @param array $param
-     * @return object
-     */
-    private function cargarObjetoConClave($param)
-    {
-        $obj = null;
-        if (isset($param['idusuario'])) {
-            $obj = new Usuario();
-            $obj->setear($param['idusuario'], null, null, null, null);
-
-        }
-        return $obj;
-    }
-
-    /**
-     * Corrobora que dentro del arreglo asociativo estan seteados los campos claves
-     * @param array $param
-     * @return boolean
-     */
-
-    private function seteadosCamposClaves($param)
-    {
-        $resp = false;
-        if (isset($param['idusuario'])) {
-            $resp = true;
-        }
-        return $resp;
-    }
-
-    /**
-     *
-     * @param array $param
-     */
-    public function alta($param)
-    {
-        $resp = false;
-        $elObjUsuario = new Usuario();
-        $elObjUsuario = $this->cargarObjeto($param);
-        if ($elObjUsuario != null and $elObjUsuario->insertar()) {
-            $resp = true;
-        }
-        return $resp;
-    }
-
-    /**
-     * permite eliminar un objeto
-     * @param array $param
-     * @return boolean
-     */
-
-    public function baja($param)
-    {
-        $resp = false;
-        if ($this->seteadosCamposClaves($param)) {
-            $elObjUsuario = $this->cargarObjetoConClave($param);
-            if ($elObjUsuario != null and $elObjUsuario->eliminar()) {
-                $resp = true;
-            }
-        }
-        return $resp;
-    }
-
-    /**
-     * permite modificar un objeto
-     * @param array $param
-     * @return boolean
-     */
-    public function modificacion($param)
-    {
-        $resp = false;
-        if ($this->seteadosCamposClaves($param)) {
-            $elObjUsuario = $this->cargarObjeto($param);
-            if ($elObjUsuario != null and $elObjUsuario->modificar()) {
-                $resp = true;
-
-            }
-        }
-        return $resp;
-    }
-
+class abmUsuario{
     /**
      * permite buscar un objeto
      * @param array $param
      * @return boolean
      */
-
     public function buscar($param)
     {
         $where = " true ";
         if ($param != null) {
             if (isset($param['idusuario'])) {
-                $where .= " and idusuario='" . $param['idusuario'] . "'";
+                $where .= " and idusuario ='" . $param['idusuario'] . "'";
             }
 
             if (isset($param['usnombre'])) {
@@ -127,12 +24,47 @@ class AbmUsuario
             if (isset($param['usmail'])) {
                 $where .= " and usmail ='" . $param['usmail'] . "'";
             }
-
             if (isset($param['usdeshabilitado'])) {
                 $where .= " and usdeshabilitado ='" . $param['usdeshabilitado'] . "'";
             }
+
         }
-        $arreglo = Usuario::listar($where);
+        $arreglo = Usuario::seleccionar($where);
         return $arreglo;
     }
+
+    public function modificacion($param){
+        $resp = false;
+        $objUs= new Usuario();
+        $pass=md5($param['uspass']);
+        $objUs->setear($param['idusuario'],$param['usnombre'],$pass,$param['usmail'],$param['usdeshabilitado']);
+        if ($objUs->modificar()){
+            $resp=true;
+        }
+        return $resp;
+    }
+
+    //Hace un borrado logico del usuario. 
+    //En caso de que ya estuviese deshabilitado, lo vuelve a habilitar.
+    public function baja ($param){
+        $resp=false;
+        $objUs=new Usuario();
+        $objUs->setear($param['idusuario'],"","","","");
+        $arreglo=$objUs->seleccionar("idusuario= ".$param['idusuario']);
+        if (count($arreglo)==1){
+            $estado=$arreglo[0]->getUsdeshabilitado();
+            if ($estado=="0000-00-00 00:00:00"){
+                if ($objUs->estado(date("Y-m-d H:i:s"))){
+                    $resp=true;
+                }
+            }else{
+                if ($objUs->estado()){
+                    $resp=true;
+                }
+            }
+        }
+        
+        return $resp;
+    }
 }
+?>

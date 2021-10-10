@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2021 a las 23:22:51
+-- Tiempo de generación: 10-10-2021 a las 22:43:54
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -29,17 +29,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `rol` (
   `idrol` bigint(20) NOT NULL,
-  `rodescripcion` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `roldescripcion` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
-(2, 'Administrador'),
-(3, 'Supervisor '),
-(4, 'Encargado');
+INSERT INTO `rol` (`idrol`, `roldescripcion`) VALUES
+(1, 'administrador'),
+(2, 'supervisor'),
+(3, 'encargado'),
+(4, 'empleado');
 
 -- --------------------------------------------------------
 
@@ -50,19 +51,21 @@ INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
 CREATE TABLE `usuario` (
   `idusuario` bigint(20) NOT NULL,
   `usnombre` varchar(50) NOT NULL,
-  `uspass` varchar(50) NOT NULL,
+  `uspass` varchar(32) NOT NULL,
   `usmail` varchar(50) NOT NULL,
-  `usdeshabilitado` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `usdeshabilitado` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
-(2, 'José R', '0192023a7bbd73250516f069df18b500', 'admin@gmail.com', NULL),
-(3, 'Luciana B', 'f35364bc808b079853de5a1e343e7159', 'supervisor@gmail.com', NULL),
-(4, 'Nicolás S', '5cc3ef5de386a269c9631c317581ea51', 'encargado@gmail.com', NULL);
+(1, 'Claudio', '14af0fd9322ea4a8815d86f0aa13c566', 'clau@gmail.com', '0000-00-00 00:00:00'),
+(2, 'Susana', '842c9034eeeb472b0bc93f3979a0cb42', 'susy@gmail.com', '0000-00-00 00:00:00'),
+(7, 'Carla', '998a0b86802f387c77bffa2d737c6557', 'ckal@gmail.com', '0000-00-00 00:00:00'),
+(15, 'Ramiro', '7b6cf1f9168cdfa3135ce28ec84ac693', 'rami@gmail.com', '0000-00-00 00:00:00'),
+(22, 'Francisco', 'a821b8b9d9837fd545cfc26cb0d95a2b', 'pancho@gmail.com', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -73,18 +76,19 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabili
 CREATE TABLE `usuariorol` (
   `idusuario` bigint(20) NOT NULL,
   `idrol` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuariorol`
 --
 
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(1, 1),
 (2, 2),
-(2, 3),
-(2, 4),
-(3, 3),
-(4, 4);
+(7, 3),
+(7, 4),
+(15, 3),
+(22, 4);
 
 --
 -- Índices para tablas volcadas
@@ -94,39 +98,20 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
-  ADD PRIMARY KEY (`idrol`),
-  ADD UNIQUE KEY `idrol` (`idrol`);
+  ADD PRIMARY KEY (`idrol`);
 
 --
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idusuario`),
-  ADD UNIQUE KEY `idusuario` (`idusuario`);
+  ADD PRIMARY KEY (`idusuario`);
 
 --
 -- Indices de la tabla `usuariorol`
 --
 ALTER TABLE `usuariorol`
   ADD PRIMARY KEY (`idusuario`,`idrol`),
-  ADD KEY `idusuario` (`idusuario`),
   ADD KEY `idrol` (`idrol`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-  MODIFY `idrol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idusuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -136,8 +121,8 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `usuariorol`
 --
 ALTER TABLE `usuariorol`
-  ADD CONSTRAINT `fkmovimiento_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuariorol_ibfk_2` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `usuariorol_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`),
+  ADD CONSTRAINT `usuariorol_ibfk_2` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

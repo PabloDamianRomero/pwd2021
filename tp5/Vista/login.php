@@ -1,25 +1,32 @@
 <?php
-$titulo = "Login";
+$titulo="Login";
 $estructuraAMostrar = "desdeVista";
-include_once "../configuracion.php";
+$seguro=false;
 include_once("estructura/cabecera.php");
- $objLogin = new Session();
- if ($objLogin->activa()) {
+$objLogin = new Session();
+if ($objLogin->activa()) {
      header('location:paginaSegura.php');
-     exit();
- }
+}
+$datos=data_submitted();
+if (isset($datos['error'])){
+    if( $datos['error']==1){
+        $mensaje="Error. Usuario y/o contraseña incorrectos.";
+    }
+}
 ?>
+
+
 <div style="margin-bottom: 20%" class="container-fluid text-center">
     <div class="bienvenida font-montserrat">
     <h1>FACULTAD DE INFORMÁTICA</h1>
         <h2>DEPARTAMENTO DE PROGRAMACIÓN</h2>
         <h3>CÁTEDRA PROGRAMACIÓN WEB DINÁMICA</h3>
         <h3 class="m-5">Autenticación / Seguridad App</h3>
-        <p>Nota: Nombre de la bd es <span class="italica negrita">dbautenticacion</span>.</p>
+        <p>Nota: Nombre de la bd es <span class="italica negrita">bdautenticacion</span>.</p>
     </div>
 
     <div class="text-center mt-5 mb-5">
-        <form class="card needs-validation" method="post" onSubmit="return validar()" action="accion/verificarLogin.php" style="max-width: 300px;margin:auto; padding:20px" novalidate>
+        <form class="card needs-validation" method="post" action="accion/verificarLogin.php" onSubmit="return validar();" style="max-width: 300px;margin:auto; padding:20px" novalidate>
                     <div class="mt-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
