@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2021 a las 10:49:42
+-- Tiempo de generación: 10-10-2021 a las 22:43:54
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -61,11 +61,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
-(1, 'Claudio', 'f6a47a638824180d57f0a561fd5843c6', 'clau@gmail.com', '0000-00-00 00:00:00'),
-(2, 'Susana', '3f06a7247d5c04d0618552dd3276ac40', 'susy@gmail.com', '0000-00-00 00:00:00'),
-(7, 'Carla', '1fa4a2211b4e290f2a066de6b84187ec', 'ckal@gmail.com', '0000-00-00 00:00:00'),
-(15, 'Ramiro', '49bbccc812370520878c7f343d48900b', 'rami@gmail.com', '0000-00-00 00:00:00'),
-(22, 'Francisco', '117735823fadae51db091c7d63e60eb0', 'pancho@gmail.com', '0000-00-00 00:00:00');
+(1, 'Claudio', '14af0fd9322ea4a8815d86f0aa13c566', 'clau@gmail.com', '0000-00-00 00:00:00'),
+(2, 'Susana', '842c9034eeeb472b0bc93f3979a0cb42', 'susy@gmail.com', '0000-00-00 00:00:00'),
+(7, 'Carla', '998a0b86802f387c77bffa2d737c6557', 'ckal@gmail.com', '0000-00-00 00:00:00'),
+(15, 'Ramiro', '7b6cf1f9168cdfa3135ce28ec84ac693', 'rami@gmail.com', '0000-00-00 00:00:00'),
+(22, 'Francisco', 'a821b8b9d9837fd545cfc26cb0d95a2b', 'pancho@gmail.com', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
