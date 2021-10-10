@@ -23,9 +23,6 @@
 -----------------------------------------------------------------------------------------
 
 (*)Notas
-- Al modificar datos del usuario, si se mantienen los 3 campos iguales a como estaban, se 
-	lo considera como acción errónea. (Se debe cambiar algún campo para realizar la 
-	transacción).
 
 - Un usuario dado de baja (usDeshabilitado cargado con fecha), no puede acceder al sistema.
 
