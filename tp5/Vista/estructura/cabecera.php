@@ -50,7 +50,11 @@ if ($seguro) {
     }
     $roles=$sesion->getRol();
     $rolDesc = "";
-    $rolDesc = $roles[0]->getObjRol()->getRolDescripcion();
+    if(count($roles) > 0){
+      $rolDesc = $roles[0]->getObjRol()->getRolDescripcion();
+    }else{
+      header("Location:accion/cerrarSesion.php");
+    }
 
     echo '<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <a class="navbar-brand" href="paginaSegura.php">Inicio</a>
