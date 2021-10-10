@@ -55,7 +55,6 @@ function validar2(){
     $userHelp=document.getElementById("user-text");
     $userHelp.innerHTML=" ";
 
-    alert('validar2');
     $pass=document.getElementById("uspass");
     $passValor=$pass.value;
     $valido=true;
@@ -101,7 +100,7 @@ function validar2(){
         $valido=false;
         $pass.value=null;
         $passHelp=document.getElementById("pass-text");
-        $passHelp.innerHTML+="La clave no puede ser igual al usuario. Si los tres campos son iguales al estado anterior, no se realizará la modificación.";
+        $passHelp.innerHTML+="La clave no puede ser igual al usuario.";
     }
     return $valido;
 }
