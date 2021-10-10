@@ -10,7 +10,7 @@ $objAbmRel=new AbmRelacion();
 $arregloUs=$objAbmRel->buscar($datos);
 $procede=true;
 $cerrarSes=false;
-if($arregloUs[0]->getObjRol()->getIdRol()==1){
+if(count($arregloUs)>0 && $arregloUs[0]->getObjRol()->getIdRol()==1){
     $procede=false;
     $otrosAdmin=$objAbmRel->buscar(['idrol'=>1]);
     if (count($otrosAdmin)>=2){
