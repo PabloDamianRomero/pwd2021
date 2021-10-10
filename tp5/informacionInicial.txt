@@ -1,0 +1,32 @@
+- Nombre de la bd = 'bdautenticacion'.
+- Dejar dentro de htdocs el directorio 'pwd2021' completo, para evitar errores de rutas.
+
+-----------------------------------------------------------------------------------------
+
+[ROLES] = 4
+
+	Rol n° 1 = Administrador (Todos los permisos).
+	Rol n° 2 = Supervisor (Ve la lista de usuarios sin permiso para borrar).
+	Rol n° 3 = Encargado (Ve la lista de usuarios sin permiso de edición y borrado).
+	Rol n° 4 = Empleado (Solo ve mensaje de bienvenida).
+
+-----------------------------------------------------------------------------------------
+
+[Usuarios cargados inicialmente]
+
+	[Admin] -----------------> Nombre Usuario = 'Claudio' ; Contraseña = 'claudio123'.
+	[Supervisor] ------------> Nombre Usuario = 'Susana' ; Contraseña = 'susana123'.
+	[Encargado/Empleado] ----> Nombre Usuario = 'Carla' ; Contraseña = 'carla123'.
+	[Encargado] -------------> Nombre Usuario = 'Ramiro' ; Contraseña = 'ramiro123'.
+	[Empleado] --------------> Nombre Usuario = 'Francisco' ; Contraseña = 'franc123'.
+
+-----------------------------------------------------------------------------------------
+
+(*)Notas
+- Al modificar datos del usuario, si se mantienen los 3 campos iguales a como estaban, se 
+	lo considera como acción errónea. (Se debe cambiar algún campo para realizar la 
+	transacción).
+
+- Un usuario dado de baja (usDeshabilitado cargado con fecha), no puede acceder al sistema.
+
+- Si hay un sólo administrador, éste no puede darse de baja ni eliminarse el rol (se necesita más 	de un administrador para realizar la acción).
