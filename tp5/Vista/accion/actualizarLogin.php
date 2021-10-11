@@ -61,7 +61,7 @@ if (isset($datos['idusuario'])){
         echo "<form method='post' action='nuevoRol.php'>
                 <table class='table table-striped table-dark text-center' style='width:fit-content'>
                 <tr>
-                    <td><input type='text' name='idrol' placeholder='Id Rol' pattern=[1-4]{1}></td>
+                    <td><input type='text' name='idrol' placeholder='Id Rol' pattern=[1-4]{1} required></td>
                     <td><input type='hidden' name='idusuario' value='".$datos['idusuario']."'></td>
                     <td><input type='submit' value='Nuevo Rol'></td>
                     <p>Roles del 1 al 4</p>

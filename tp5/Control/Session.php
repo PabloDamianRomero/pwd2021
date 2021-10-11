@@ -2,12 +2,11 @@
 class Session{
     private $usuarioActual;
     private $pass;
+    private $mensajeError;
     //Constructor que inicia la sesion
     public function __construct()
     {
         session_start();
-        //$this->usuarioActual=$_SESSION['usuario'];
-        //$this->pass=$_SESSION['pass'];
     }
 
     public function getUsuarioActual()
@@ -26,6 +25,15 @@ class Session{
     {
         $_SESSION['pass']=$pass;
     }
+    public function getMensajeError()
+    {
+        return $_SESSION['error'];
+    }
+
+    public function setMensajeError($mensajeError)
+    {
+        $_SESSION['error'] = $mensajeError;
+    }
 
     // Actualiza las variables de sesion con los valores ingresados
     public function iniciar($nombreUsuario,$psw){
@@ -43,13 +51,18 @@ class Session{
             //Chequeo que no haya sido borrado
             if ($arreglo[0]->getUsdeshabilitado()=="0000-00-00 00:00:00"){
                 $valido=true;
+            }else{
+                $this->setMensajeError("El usuario no está habilitado en la base.");
             }
             //Chequeo que tenga un rol asignado
             $abmRel=new AbmRelacion();
             $arrayRel=$abmRel->buscar(['idusuario'=>$arreglo[0]->getIdusuario()]);
             if (count($arrayRel)<1){
                 $valido=false;
+                $this->setMensajeError("El usuario no posee ningun rol en la base.");
             }
+        }else{
+            $this->setMensajeError("Usuario y/o contraseña incorrecto.");
         }
         return $valido;
     }
