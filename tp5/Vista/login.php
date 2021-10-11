@@ -8,10 +8,9 @@ if ($objLogin->activa()) {
      header('location:paginaSegura.php');
 }
 $datos=data_submitted();
+$mensaje="";
 if (isset($datos['error'])){
-    if( $datos['error']==1){
-        $mensaje="Error. Usuario y/o contraseña incorrectos.";
-    }
+        $mensaje=$datos['error'];
 }
 ?>
 
@@ -28,6 +27,11 @@ if (isset($datos['error'])){
     <div class="text-center mt-5 mb-5">
         <form class="card needs-validation" method="post" action="accion/verificarLogin.php" onSubmit="return validar();" style="max-width: 300px;margin:auto; padding:20px" novalidate>
                     <div class="mt-3">
+                        <div id="invalid" style="color:red">
+                            <?php if (!$mensaje==""){
+                                echo $mensaje;
+                            } ?>
+                        </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>

@@ -7,7 +7,8 @@
     if ($valido){
         header("Location:../paginaSegura.php");
     }else{
+        $msj=$sesion->getMensajeError();
         $sesion->cerrar();
-        header("Location:../login.php?error=1");
+        header("Location:../login.php?error=$msj");
     }
 ?>
